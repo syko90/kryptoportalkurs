@@ -1,0 +1,37 @@
+{% extends 'baza.html' %}
+
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Najciekawsze wydarzenia na kryptowalutach!</h1>
+      <p class="lead">Znajdziesz tutaj sprawdzone informacje o wydarzeniach na kryptowalutach!</p>
+    </div>
+  </div>
+
+    <div class="row">
+        {% for x in event_cal.body %}
+        <div class="col-sm">
+            <div class="card" style="width: 30rem;">
+                <h5 class="card-title" style="text-align: center">{{ x.title.en }}</h5>
+                <img src="{{ x.proof }}" class="card-img-top" alt="...">
+                <div class="card-body">                    
+                    <p class="card-text" style="text-align: center">Data: {{ x.date_event|slice:10 }}</p>
+                    {% for y in x.coins %}
+                        <p style="text-align: center">Kryptowaluta: {{ y.fullname }}</p>
+                    {% endfor %}
+                    <a href="{{ x.source }}" class="btn btn-primary">Przejdź do wydarzenia</a>
+                </div>
+            </div>
+            <br/>
+            <br/>
+        </div>    
+        {% endfor %}
+    </div>    
+
+
+
+
+
+
+{% endblock%}
