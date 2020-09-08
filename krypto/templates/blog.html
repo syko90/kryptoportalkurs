@@ -1,0 +1,35 @@
+{% extends 'baza.html' %}
+
+
+{% block content %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+        <h1 class="display-4">Blog związany z kryptowalutami!</h1>
+        <p class="lead">Sprawdź najważnijesze informacje ze świata kryptowalut</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for x in news.Data %}
+        <div class="col-sm">
+            <div class="card" style="width: 30rem;">
+                <h5 class="card-title" style="text-align: center">{{ x.title }}</h5>
+                <img src="{{ x.imageurl }}" class="card-img-top" alt="...">
+                <div class="card-body">                    
+                    <p class="card-text" style="text-align: center">{{ x.body }}</p>
+                    <a href="{{ x.url }}" class="btn btn-primary">Przejdź do wydarzenia</a>
+                </div>
+            </div>
+            <br/>
+            <br/>
+        </div>    
+        {% endfor %}
+    </div>    
+
+
+
+
+
+
+{% endblock%}

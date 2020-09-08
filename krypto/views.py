@@ -1,8 +1,17 @@
 from django.shortcuts import render
 import requests
 import json
+from . import jprint
+
 
 # Create your views here.
+def blog(request):
+    news_request = requests.get("https://min-api.cryptocompare.com/data/v2/news/?lang=EN")
+    news = json.loads(news_request.content)
+    jprint.jprint(news)
+    return render(request, "blog.html", {'news': news })
+    
+
 def wydarzenia(request):
     
     url = "https://developers.coinmarketcal.com/v1/events"
@@ -17,12 +26,8 @@ def wydarzenia(request):
     event_cal = json.loads(response.content) 
     # print(event_cal)
 
-    def jprint(krypto):
-        # tworzy sfromatowany JSON  postaci string
-        text = json.dumps(krypto, sort_keys=True, indent=4)
-        print(text)
+    # jprint.jprint(event_cal)
 
-    jprint(event_cal)
 
 
     return render(request, "wydarzenia.html", {'event_cal': event_cal})
