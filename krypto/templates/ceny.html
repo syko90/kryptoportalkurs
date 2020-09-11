@@ -1,0 +1,53 @@
+{% extends 'baza.html' %}
+
+{% block content %}
+
+
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Kryptowaluta</th>
+            <th scope="col">Aktualna cena</th>
+            <th scope="col">Dzisiejsza najwyższa wartość</th>
+            <th scope="col">Dzisiejsza najniższa wartość</th>
+            <th scope="col">Marketcap</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        {% for key, value in cena.DISPLAY.items %}
+          <tr>
+            <td>{{ key }}</td>
+            <td>{{ value.PLN.PRICE }}</td>
+            <td>{{ value.PLN.HIGHDAY }}</td>
+            <td>{{ value.PLN.LOWDAY }}</td>
+            <td>{{ value.PLN.MKTCAP }}</td>
+          </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+
+      <br/>
+      <br/>
+
+      {% if  krypto.Response %}
+            <h3> Symbol <strong> {{  zapytanie }}</strong> nie istieje. Wpisz inny symbol krypowaluty w naszej aplikacji</h3>
+      {% endif %}
+
+      {% for x, y in krypto.DISPLAY.items %}
+
+            
+        <strong>Krytptowaluta</strong>: {{ x }}</br>
+        <strong>Cena</strong>: {{ y.PLN.PRICE }}</br>
+        <strong>24h high</strong>: {{ y.PLN.HIGHDAY }}</br>
+        <strong>24h low</strong>: {{ y.PLN.LOWDAY }}</br>
+        <strong>MKC</strong>:{{ y.PLN.MKTCAP }}</br>
+  
+
+    {% endfor %}
+
+
+
+
+{% endblock %}

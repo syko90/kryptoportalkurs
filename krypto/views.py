@@ -5,10 +5,38 @@ from . import jprint
 
 
 # Create your views here.
+# def wyszukiwarka(request):
+#     if request.method == "POST":
+#         zapytanie = request.POST['zapytanie']
+#         print(zapytanie)
+#         krypto_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms= " + zapytanie + "&tsyms=PLN")
+#         krypto = json.loads(krypto_request.content)
+#         return render(request, 'ceny.html', { 'zapytanie': zapytanie, 'krypto': krypto} )
+#     else: 
+#         return render(request, 'ceny.html')
+
+def ceny(request):
+    if request.method == 'POST':
+        zapytanie = request.POST['zapytanie']
+        print(zapytanie)
+        krypto_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + zapytanie + "&tsyms=PLN")
+        krypto = json.loads(krypto_request.content)
+        cena_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BAT&tsyms=PLN")
+        cena = json.loads(cena_request.content)
+        return render(request, 'ceny.html', { 'zapytanie': zapytanie, 'krypto': krypto, 'cena': cena} )
+
+    else:
+        cena_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BAT&tsyms=PLN")
+        cena = json.loads(cena_request.content)
+        jprint.jprint(cena)
+        return render(request, 'ceny.html', {'cena': cena })
+
+    
+
 def blog(request):
     news_request = requests.get("https://min-api.cryptocompare.com/data/v2/news/?lang=EN")
     news = json.loads(news_request.content)
-    jprint.jprint(news)
+    # jprint.jprint(news)
     return render(request, "blog.html", {'news': news })
     
 
