@@ -2,36 +2,31 @@ from django.shortcuts import render
 import requests
 import json
 from . import jprint
+from web3 import Web3
 
 
 # Create your views here.
-# def wyszukiwarka(request):
-#     if request.method == "POST":
-#         zapytanie = request.POST['zapytanie']
-#         print(zapytanie)
-#         krypto_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms= " + zapytanie + "&tsyms=PLN")
-#         krypto = json.loads(krypto_request.content)
-#         return render(request, 'ceny.html', { 'zapytanie': zapytanie, 'krypto': krypto} )
-#     else: 
-#         return render(request, 'ceny.html')
+def portfel(request):
+    infura_url = "https://mainnet.infura.io/v3/e682a2332362431cbff2af376b64faeb"
+    web3 = Web3(Web3.HTTPProvider(infura_url))
+    is_connected = web3.isConnected()
+
+    return render(request, 'portfel.html', { 'is_connected': is_connected })
 
 def ceny(request):
     if request.method == 'POST':
         zapytanie = request.POST['zapytanie']
-        print(zapytanie)
         krypto_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + zapytanie + "&tsyms=PLN")
         krypto = json.loads(krypto_request.content)
         cena_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BAT&tsyms=PLN")
         cena = json.loads(cena_request.content)
-        return render(request, 'ceny.html', { 'zapytanie': zapytanie, 'krypto': krypto, 'cena': cena} )
+        return render(request, 'ceny.html', {'cena': cena, 'zapytanie': zapytanie, 'krypto': krypto })
 
     else:
         cena_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,BAT&tsyms=PLN")
         cena = json.loads(cena_request.content)
-        jprint.jprint(cena)
         return render(request, 'ceny.html', {'cena': cena })
 
-    
 
 def blog(request):
     news_request = requests.get("https://min-api.cryptocompare.com/data/v2/news/?lang=EN")

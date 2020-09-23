@@ -28,26 +28,23 @@
         </tbody>
       </table>
 
-      <br/>
-      <br/>
+      {% if krypto.Response %}
 
-      {% if  krypto.Response %}
-            <h3> Symbol <strong> {{  zapytanie }}</strong> nie istieje. Wpisz inny symbol krypowaluty w naszej aplikacji</h3>
+        <h3> Symbol <strong> {{ zapytanie }} </strong> nie istnieje. Wpisz inny symbol kryptowaluty.</h3>
+
       {% endif %}
 
       {% for x, y in krypto.DISPLAY.items %}
 
-  
-        <img src="https://www.cryptocompare.com/{{y.PLN.IMAGEURL }}" alt="..." class="img-thumbnail"></br>
+        <img src="https://cryptocompare.com/{{ y.PLN.IMAGEURL }} " alt="..." class="img-thumbnail"> <br/>
         <h5>
-        <strong>Krytptowaluta</strong>: {{ x }}</br>
-        <strong>Cena</strong>: {{ y.PLN.PRICE }}</br>
-        <strong>24h high</strong>: {{ y.PLN.HIGHDAY }}</br>
-        <strong>24h low</strong>: {{ y.PLN.LOWDAY }}</br>
-        <strong>MKC</strong>:{{ y.PLN.MKTCAP }}</br>
-    </h5>
-
-    {% endfor %}
+            <strong>Krytptowaluta</strong>: {{ x }}</br>
+            <strong>Cena</strong>: {{ y.PLN.PRICE }}</br>
+            <strong>24h high</strong>: {{ y.PLN.HIGHDAY }}</br>
+            <strong>24h low</strong>: {{ y.PLN.LOWDAY }}</br>
+            <strong>MKC</strong>:{{ y.PLN.MKTCAP }}</br>
+        </h5>
+        {% endfor %}
 
 
 
