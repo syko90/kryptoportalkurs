@@ -11,7 +11,17 @@ def portfel(request):
     web3 = Web3(Web3.HTTPProvider(infura_url))
     is_connected = web3.isConnected()
 
-    return render(request, 'portfel.html', { 'is_connected': is_connected })
+    eth_request = requests.get("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=PLN")
+    ethereum = json.loads(eth_request.content)
+
+    gas_cena = web3.eth.gasPrice
+    metamask = web3.eth.getBalance("0x9d87b4a6B6b5061D2D3Be0D8B1106b909A2B2b0a")
+    metamask_eth = web3.fromWei(metamask, "ether")
+    metamask_pln = float(metamask_eth)*ethereum['RAW']['ETH']['PLN']['PRICE']
+
+    #print(type(ethereum['RAW']['ETH']['PLN']['PRICE']))
+
+    return render(request, 'portfel.html', { 'is_connected': is_connected, 'gas_cena': gas_cena, 'metamask_eth': metamask_eth, 'metamask_pln': metamask_pln } )
 
 def ceny(request):
     if request.method == 'POST':

@@ -1,7 +1,46 @@
 {% extends 'baza.html' %}
+{% load static %}
 
 {% block content %}
 
-    Połączenie z siecią Ethereum: {{ is_connected }}
+    <img src="{% static '/pliki/metamask.png' %}" class="rounded mx-auto d-block img-fluid"  alt="Responsive image" >
+
+    <br/>
+
+    {% if  is_connected %}
+  
+        <div class="table-responsive"> <div style="overflow-x:auto;">
+        <table class="table table-striped table-bordered table-dark  "> 
+            <thead>
+            <tr>
+                <th scope="col">Stan konta Ethereum</th>
+                <th scope="col">Stan konta w PLN</th>
+                <th scope="col">Cena gazu</th>
+                <th scope="col">Status połączenia</th>
+            </tr>
+            </thead>
+            <tbody>
+    
+                <td class="align-middle"> {{ metamask_eth|floatformat:4 }} ETH</td>
+                <td class="align-middle"> {{ metamask_pln|floatformat:2 }} PLN </td>
+                <td class="align-middle"> {{ gas_cena }} Wei</td>
+                <td class="align-middle">  <div class="alert alert-success"  role="alert" >
+                    połączony </div> </td>
+        
+    
+            </tbody>
+        </table>
+        </div>
+    
+        <br><br/>
+    
+ 
+     {% else %}
+        <div class="alert alert-danger" role="alert">
+            Nie jesteś połączony z siecią Ethereum!
+        </div>
+
+     {% endif %}
+   
 
 {% endblock%}
